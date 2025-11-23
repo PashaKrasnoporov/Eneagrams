@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}Повна розшифровка типу Енеаграми{% endblock %}
+{% block content %}
+<div class="result-container">
+    <a href="/result" style="color: #0066CC; text-decoration: none; font-weight: 600; display: inline-block; margin-bottom: 2rem;">← Назад до результатів</a>
+
+    <h1 class="result-title">📖 ПОВНА РОЗШИФРОВКА</h1>
+
+    <div class="result-card-main">
+        <div id="fullContent" style="line-height: 1.8; white-space: pre-wrap; color: #2C3E50; font-size: 1rem; margin-bottom: 3rem;"></div>
+
+        <div class="video-section">
+            <h3 style="text-align: center; color: #0066CC; margin-bottom: 2rem; font-size: 1.5rem;">📹 ВІДЕО ДЛЯ ГЛИБШОГО РОЗУМІННЯ</h3>
+            <p style="text-align: center; margin-bottom: 2rem; color: #7F8C8D; font-size: 1rem;">
+                Дивіться відео нижче, щоб краще зрозуміти ваш тип особистості і як розвиватися:
+            </p>
+
+            <div class="video-grid">
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 1</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Основні характеристики</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 2</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Розвиток та ріст</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 3</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Стосунки</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 4</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Творчість</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 5</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Мотивація</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 6</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Страхи</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 7</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Карьєра</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 8</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Сім'я</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 9</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Здоров'я</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 10</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Фінанси</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 11</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Суспільство</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 12</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Саморозвиток</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 13</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Баланс</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+
+                <div class="video-placeholder">
+                    <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎬</p>
+                    <p style="font-weight: 600;">Відео 14</p>
+                    <p style="font-size: 0.85rem; color: #7F8C8D;">Успіх</p>
+                    <input type="text" placeholder="https://..." style="width: 90%; margin-top: 0.5rem; padding: 0.5rem; border: 1px solid #D0E3FF; border-radius: 6px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const result = JSON.parse(localStorage.getItem('enneagram_result'));
+if(result) {
+    document.getElementById('fullContent').textContent = result.full_description;
+}
+</script>
+{% endblock %}

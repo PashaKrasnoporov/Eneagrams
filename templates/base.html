@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Тест Енеаграми{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>🔮 Енеаграма</h2>
+            </div>
+            <!-- ОДИН nav-links! -->
+            <div class="nav-links">
+                <a href="/home">Головна</a>
+                <a href="/info">Про тест</a>
+                <a href="/payment" class="nav-icon" title="Оплата"><span style="font-size: 1.1em">💳</span> Оплата</a>
+                <a href="/test" id="navTest" style="display:none;">Тест</a>
+                <a href="/result" id="navResult" style="display:none;">Результати</a>
+            </div>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+    <footer>
+      <p>&copy; 2025 Тест Енеаграми. Система 9 типів особистості.</p>
+    </footer>
+    <!-- ОДИН раз JS! -->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const sessionId = localStorage.getItem('enneagram_session');
+    document.getElementById('navTest').style.display = sessionId ? "inline-flex" : "none";
+    document.getElementById('navResult').style.display = sessionId ? "inline-flex" : "none";
+});
+</script>
+</body>
+</html>

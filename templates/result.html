@@ -8,29 +8,37 @@
         <div class="type-badge">
             <div class="type-number" id="typeNumber">-</div>
         </div>
+
         <div class="type-info">
             <h2 class="type-name" id="typeName">Завантаження результатів...</h2>
             <p class="type-subtitle" id="typeSubtitle"></p>
         </div>
+
         <p class="type-short-desc" id="shortDescription"></p>
+
         <div class="characteristics-grid">
             <div class="characteristics-section">
                 <h3>💪 Сильні сторони</h3>
+                <p class="char-short" id="strengthsShort"></p>
                 <ul id="strengths"></ul>
             </div>
             <div class="characteristics-section">
                 <h3>🌱 Область розвитку</h3>
+                <p class="char-short" id="growthShort"></p>
                 <ul id="growth"></ul>
             </div>
             <div class="characteristics-section">
                 <h3>❤️ Мотивації</h3>
+                <p class="char-short" id="motivationsShort"></p>
                 <ul id="motivations"></ul>
             </div>
             <div class="characteristics-section">
                 <h3>😨 Страхи</h3>
+                <p class="char-short" id="fearsShort"></p>
                 <ul id="fears"></ul>
             </div>
         </div>
+
         <div class="action-buttons">
             <a href="/full-description" class="btn btn-primary">📖 Повна розшифровка</a>
             <button class="btn btn-secondary" id="downloadPdfBtn">📄 Завантажити PDF</button>
@@ -56,6 +64,20 @@ async function loadResult() {
         document.getElementById('typeSubtitle').textContent = result.subtitle;
         document.getElementById('shortDescription').textContent = result.short_description;
 
+        // Короткі описи для 4 блоків (якщо є в результаті)
+        if (result.strengths_short) {
+            document.getElementById('strengthsShort').textContent = result.strengths_short;
+        }
+        if (result.growth_short) {
+            document.getElementById('growthShort').textContent = result.growth_short;
+        }
+        if (result.motivations_short) {
+            document.getElementById('motivationsShort').textContent = result.motivations_short;
+        }
+        if (result.fears_short) {
+            document.getElementById('fearsShort').textContent = result.fears_short;
+        }
+
         function fillList(listId, items) {
             const el = document.getElementById(listId);
             el.innerHTML = '';
@@ -69,12 +91,13 @@ async function loadResult() {
                 });
             }
         }
+
         fillList('strengths', result.strengths);
         fillList('growth', result.growth);
         fillList('motivations', result.motivations);
         fillList('fears', result.fears);
 
-    } catch(e) {
+    } catch (e) {
         document.getElementById('typeName').textContent = 'Помилка завантаження результатів';
     }
 }
@@ -88,7 +111,7 @@ document.getElementById('downloadPdfBtn').addEventListener('click', () => {
 // === КНОПКА EMAIL (заглушка) ===
 document.getElementById('emailBtn').addEventListener('click', () => {
     const email = prompt('Введіть ваш email для отримання результатів:');
-    if(email) alert('✅ Результати будуть надіслані на ' + email);
+    if (email) alert('✅ Результати будуть надіслані на ' + email);
 });
 
 // === СТАРТ ===

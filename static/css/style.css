@@ -236,8 +236,9 @@ body {
     padding: 3rem;
     border-radius: 12px;
     box-shadow: var(--shadow);
-    text-align: center;
+    text-align: left; /* було center */
 }
+
 
 .price {
     font-size: 3rem;
@@ -805,4 +806,229 @@ footer {
 .nav-links a.active {
   color: var(--primary-color);
   font-weight: 500;
+}
+
+/* Flip-картки на головній */
+
+.flip-card {
+  perspective: 1000px;
+  padding: 0;              /* свій відступ буде у flip-front/back */
+  background: transparent; /* фон всередині сторінок */
+  box-shadow: none;
+}
+
+.flip-card .flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.flip-card:hover .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card .flip-front,
+.flip-card .flip-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--white);
+}
+
+/* Лицьова сторона — використовує вже існуючі стилі feature-card */
+.flip-card .flip-front .feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Зворотна сторона */
+.flip-card .flip-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--white);
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+/* Текст усередині flip-карток */
+.flip-card .flip-front,
+.flip-card .flip-back {
+  overflow: hidden;          /* нічого поза межами блоку */
+}
+
+
+/* Flip-картки: фіксована висота + поведінка тексту */
+.flip-card .flip-inner {
+  min-height: 220px;
+  max-height: 220px;      /* усі картки однакової висоти */
+}
+
+.flip-card .flip-front p,
+.flip-card .flip-front h3,
+.flip-card .flip-back p {
+  width: 100%;
+  text-align: center;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+.question-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+/* Стани кнопки "Далі" */
+#nextBtn {
+    opacity: 0.5;
+    cursor: default;
+    box-shadow: none;
+    transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+#nextBtn.btn-primary-active {
+    opacity: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+}
+
+#nextBtn.btn-primary-active:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Опційно: підсвітка вибраної відповіді */
+.option-btn.active {
+    border-color: var(--primary-color);
+    background: #F0F8FF;
+}
+/* ===== NAVBAR: десктоп ===== */
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* Кнопка бургер-меню: на десктопі прихована */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+/* ===== NAVBAR базова ===== */
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* ===== Бургер-меню: іконка ===== */
+.nav-toggle {
+    display: none;              /* показуємо тільки на мобільних */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
+
+/* Три смужки */
+.nav-toggle span,
+.nav-toggle::before,
+.nav-toggle::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--primary-color); /* або #2196F3 */
+    transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease, bottom 0.2s ease;
+}
+
+
+.nav-toggle span {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-toggle::before {
+    top: 7px;
+}
+
+.nav-toggle::after {
+    bottom: 7px;
+}
+
+/* Стан "відкрите меню" – хрестик */
+.nav-toggle.open span {
+    opacity: 0;
+}
+
+.nav-toggle.open::before {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.nav-toggle.open::after {
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+/* ===== Мобільна навігація ===== */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 16px;
+        left: 16px;
+        display: none;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        background: rgba(0, 40, 60, 0.97);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        z-index: 50;
+    }
+
+    .nav-links a {
+        color: #ffffff;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
 }

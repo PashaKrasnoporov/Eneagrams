@@ -111,6 +111,12 @@ async def submit_test(data: dict):
         "growth": type_info.get("growth", []),
         "motivations": type_info.get("motivations", []),
         "fears": type_info.get("fears", []),
+
+        "strengths_short": type_info.get("strengths_short", ""),
+        "growth_short": type_info.get("growth_short", ""),
+        "motivations_short": type_info.get("motivations_short", ""),
+        "fears_short": type_info.get("fears_short", ""),
+
         "scores": scores,
         "timestamp": datetime.now().isoformat()
     }

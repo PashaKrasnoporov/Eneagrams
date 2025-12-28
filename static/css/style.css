@@ -384,25 +384,8 @@ body {
     gap: 1rem;
 }
 
-.option-btn:hover {
-    border-color: var(--primary-color);
-    background: #F0F8FF;
-    transform: translateX(5px);
-}
 
-.option-letter {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: var(--primary-color);
-    color: var(--white);
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
+
 
 .option-text {
     font-size: 1.1rem;
@@ -1031,4 +1014,70 @@ footer {
     .nav-links.open {
         display: flex;
     }
+}
+ 
+
+
+.option-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+
+
+/* === OPTION BUTTONS: YELLOW + BLUE BORDER + 3D === */
+.option-btn {
+    background: linear-gradient(180deg, #FFD84D, #FFC400);
+    border: 3px solid #1E88E5;
+    padding: 1.5rem;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    /* 3D ефект */
+    box-shadow:
+        0 6px 0 #1565C0,
+        0 8px 16px rgba(0,0,0,0.25);
+}
+
+.option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 0 #1565C0,
+        0 12px 20px rgba(0,0,0,0.3);
+}
+
+.option-btn:active {
+    transform: translateY(4px);
+    box-shadow:
+        0 2px 0 #1565C0,
+        0 4px 8px rgba(0,0,0,0.2);
+}
+
+.option-letter {
+    background: #1E88E5;
+    color: #FFFFFF;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.25);
+}
+
+/* Вибраний варіант */
+.option-btn.active {
+    background: linear-gradient(180deg, #FFEB3B, #FFC107);
+    border-color: #0D47A1;
+    box-shadow:
+        0 4px 0 #0D47A1,
+        0 8px 14px rgba(0,0,0,0.35);
 }

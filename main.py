@@ -16,6 +16,10 @@ from pdf_routes import router as pdf_router
 from pydantic import BaseModel, EmailStr
 from email_sender import send_enneagram_result_email
 
+from fastapi import Request
+import asyncio
+from geo_logger import print_geo_for_ip
+
 try:
     questions_data = json.load(open('data/questions.json', encoding='utf-8'))
     types_data = json.load(open('data/type_descriptions.json', encoding='utf-8'))
@@ -144,6 +148,17 @@ async def send_result_email(data: EmailRequest):
         return {"success": True}
     else:
         raise HTTPException(status_code=500, detail="Не вдалося надіслати email")
+
+@app.middleware("http")
+async def geo_middleware(request: Request, call_next):
+    client_ip = request.client.host
+
+    # Фоновий таск, щоб не гальмувати відповідь користувачу
+    asyncio.create_task(print_geo_for_ip(client_ip))
+
+    response = await call_next(request)
+    return response
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

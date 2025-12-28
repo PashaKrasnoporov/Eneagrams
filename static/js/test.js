@@ -24,8 +24,38 @@ const optionBButton = document.getElementById('optionB');
 async function loadQuestions() {
     try {
         const r = await fetch(`/api/test/questions?session_id=${sessionId}`);
+
+        // ✅ FIX START: fetch НЕ кидає помилку на 403/401, тому обов’язково перевіряємо r.ok
+        if (!r.ok) {
+            // якщо сесія невалідна на сервері (після перезапуску/затирання sessions.json тощо)
+            if (r.status === 401 || r.status === 403) {
+                localStorage.removeItem('enneagram_session');
+                localStorage.removeItem('enneagram_current_index');
+                localStorage.removeItem('enneagram_answers');
+                // (результат можна не чіпати, але краще теж прибрати щоб не було “примарних” станів)
+                // localStorage.removeItem('enneagram_result');
+                window.location.href = '/payment';
+                return;
+            }
+            // інші помилки
+            alert('❌ Помилка доступу до питань');
+            window.location.href = '/payment';
+            return;
+        }
+        // ✅ FIX END
+
         const d = await r.json();
         questions = d.questions || [];
+
+        // ✅ FIX START: якщо питань 0 — НЕ можна викликати showQuestion(), бо вона одразу submitTest()
+        if (!Array.isArray(questions) || questions.length === 0) {
+            // найбезпечніше — вважати, що доступу нема або дані не завантажились
+            alert('❌ Питання не завантажились. Спробуйте знову через оплату.');
+            window.location.href = '/payment';
+            return;
+        }
+        // ✅ FIX END
+
         document.getElementById('totalQuestions').textContent = questions.length;
         showQuestion();
     } catch (e) {
@@ -37,6 +67,13 @@ async function loadQuestions() {
 function showQuestion() {
     localStorage.setItem('enneagram_current_index', currentIndex);
     localStorage.setItem('enneagram_answers', JSON.stringify(answers));
+
+    // ✅ FIX START: додатковий захист — якщо питань нема, не сабмітити тест
+    if (!questions || questions.length === 0) {
+        window.location.href = '/payment';
+        return;
+    }
+    // ✅ FIX END
 
     if (currentIndex >= questions.length) {
         submitTest();
@@ -110,6 +147,22 @@ async function submitTest() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ session_id: sessionId, answers })
         });
+
+        // ✅ FIX START: якщо submit теж 401/403 — сесія невалідна, не продовжуємо
+        if (!r.ok) {
+            if (r.status === 401 || r.status === 403) {
+                localStorage.removeItem('enneagram_session');
+                localStorage.removeItem('enneagram_current_index');
+                localStorage.removeItem('enneagram_answers');
+                alert('❌ Доступ до тесту втрачено. Введіть код оплати ще раз.');
+                window.location.href = '/payment';
+                return;
+            }
+            alert('❌ Помилка збереження результату');
+            return;
+        }
+        // ✅ FIX END
+
         const d = await r.json();
         localStorage.setItem('enneagram_result', JSON.stringify(d));
         localStorage.removeItem('enneagram_current_index');

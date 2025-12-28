@@ -1075,7 +1075,7 @@ footer {
 
 /* Вибраний варіант */
 .option-btn.active {
-    background: linear-gradient(180deg, #FFEB3B, #FFC107);
+    background: linear-gradient(180deg, #82b7f4, #0b6edf);
     border-color: #0D47A1;
     box-shadow:
         0 4px 0 #0D47A1,

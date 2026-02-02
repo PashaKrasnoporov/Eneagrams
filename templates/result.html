@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}Результати тесту Енеаграми{% endblock %}
+{% block content %}
+
+<div class="result-container">
+    <h1 class="result-title">✨ ВАШ РЕЗУЛЬТАТ ✨</h1>
+
+    <!-- Контейнер для 1+ результатів -->
+    <div id="resultsContainer"></div>
+
+    <!-- Кнопки завжди внизу під усіма розшифровками -->
+    <div class="action-buttons">
+        <a href="/full-description" class="btn btn-primary">📖 Повна розшифровка</a>
+        <button class="btn btn-secondary" id="downloadPdfBtn">📄 Завантажити PDF</button>
+        <button class="btn btn-secondary" id="emailBtn">📧 На email</button>
+    </div>
+</div>
+
+<!-- Шаблон одного блоку результату -->
+<template id="resultTemplate">
+    <div class="result-card-main" style="margin-bottom: 24px;">
+        <div class="type-badge">
+            <div class="type-number" data-field="typeNumber">-</div>
+        </div>
+
+        <div class="type-info">
+            <h2 class="type-name" data-field="typeName">Завантаження результатів...</h2>
+            <p class="type-subtitle" data-field="typeSubtitle"></p>
+        </div>
+
+        <p class="type-short-desc" data-field="shortDescription"></p>
+
+        <div class="characteristics-grid">
+            <div class="characteristics-section">
+                <h3>💪 Сильні сторони</h3>
+                <p class="char-short" data-field="strengthsShort"></p>
+                <ul data-field="strengths"></ul>
+            </div>
+            <div class="characteristics-section">
+                <h3>🌱 Область розвитку</h3>
+                <p class="char-short" data-field="growthShort"></p>
+                <ul data-field="growth"></ul>
+            </div>
+            <div class="characteristics-section">
+                <h3>❤️ Мотивації</h3>
+                <p class="char-short" data-field="motivationsShort"></p>
+                <ul data-field="motivations"></ul>
+            </div>
+            <div class="characteristics-section">
+                <h3>😨 Страхи</h3>
+                <p class="char-short" data-field="fearsShort"></p>
+                <ul data-field="fears"></ul>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+// === РЕНДЕР ОДНОГО БЛОКУ РЕЗУЛЬТАТУ ===
+function renderOneResult(container, result) {
+    const tpl = document.getElementById('resultTemplate');
+    const node = tpl.content.cloneNode(true);
+
+    function setText(field, value) {
+        const el = node.querySelector(`[data-field="${field}"]`);
+        if (el) el.textContent = value ?? '';
+    }
+
+    function fillList(field, items) {
+        const el = node.querySelector(`[data-field="${field}"]`);
+        if (!el) return;
+        el.innerHTML = '';
+        if (items && Array.isArray(items)) {
+            items.forEach(i => {
+                if (typeof i === 'string' && i.trim()) {
+                    const li = document.createElement('li');
+                    li.textContent = i;
+                    el.appendChild(li);
+                }
+            });
+        }
+    }
+
+    setText('typeNumber', result.personality_type);
+    setText('typeName', result.type_name);
+    setText('typeSubtitle', result.subtitle);
+    setText('shortDescription', result.short_description);
+
+    setText('strengthsShort', result.strengths_short);
+    setText('growthShort', result.growth_short);
+    setText('motivationsShort', result.motivations_short);
+    setText('fearsShort', result.fears_short);
+
+    fillList('strengths', result.strengths);
+    fillList('growth', result.growth);
+    fillList('motivations', result.motivations);
+    fillList('fears', result.fears);
+
+    container.appendChild(node);
+}
+
+// === ВІДОБРАЖЕННЯ РЕЗУЛЬТАТУ (1 або кілька типів) ===
+async function loadResult() {
+    const sessionId = localStorage.getItem('enneagram_session');
+    if (!sessionId) return;
+
+    try {
+        const response = await fetch(`/api/results/${sessionId}`);
+        if (!response.ok) throw new Error('Не знайдено');
+
+        const result = await response.json();
+        localStorage.setItem('enneagram_result', JSON.stringify(result));
+
+        const container = document.getElementById('resultsContainer');
+        container.innerHTML = '';
+
+        // Якщо бекенд повернув кілька топ-результатів — рендеримо всі
+        const resultsArray = Array.isArray(result.top_results) && result.top_results.length
+            ? result.top_results
+            : [result];
+
+        resultsArray.forEach(r => renderOneResult(container, r));
+
+    } catch (e) {
+        const container = document.getElementById('resultsContainer');
+        container.innerHTML = '<div class="result-card-main"><h2>Помилка завантаження результатів</h2></div>';
+    }
+}
+
+// === КНОПКА PDF ===
+document.getElementById('downloadPdfBtn').addEventListener('click', () => {
+    const sessionId = localStorage.getItem('enneagram_session');
+    window.location.href = `/api/results/${sessionId}/pdf`;
+});
+
+// === КНОПКА EMAIL (заглушка) ===
+document.getElementById('emailBtn').addEventListener('click', () => {
+    const email = prompt('Введіть ваш email для отримання результатів:');
+    if (email) alert('✅ Результати будуть надіслані на ' + email);
+});
+
+// === СТАРТ ===
+loadResult();
+</script>
+
+{% endblock %}

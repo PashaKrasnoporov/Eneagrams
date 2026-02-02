@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Доступ до тесту{% endblock %}
+{% block content %}
+<div class="content-section">
+    <div class="container">
+        <div class="payment-container">
+            <div class="payment-card">
+                <h2>🔑 Активуйте доступ</h2>
+                <p style="margin: 1.5rem 0; font-size: 1.1rem;">Введіть тестовий код для активації:</p>
+                <div class="test-code-section">
+                    <input type="text" id="testCode" placeholder="Введіть код" autocomplete="off">
+                    <button class="btn btn-primary btn-large" id="activateBtn" style="width: 100%;">Активувати доступ</button>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.95rem; color: #7F8C8D;">
+                    💡 <strong>Тестовий код:</strong> TEST2024<br>
+                    Використовуйте цей код для тестування та повного доступу до тесту
+                </p>
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #E3F2FD; border-radius: 12px; border-left: 4px solid #0066CC;">
+                    <p style="color: #0066CC; font-weight: 600; margin-bottom: 0.5rem;">✨ Що ви отримаєте?</p>
+                    <ul style="padding-left: 1.5rem; list-style-position: inside;">
+                        <li>✅ Повний доступ до 144 питань тесту</li>
+                        <li>✅ Детальну розшифровку вашого типу</li>
+                        <li>✅ Рекомендації для розвитку та росту</li>
+                        <li>✅ Завантаження результату в PDF</li>
+                        <li>✅ Відео-матеріали для кожного типу (14 відео)</li>
+                        <li>✅ Постійний доступ після активації</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+async function activate() {
+    const code = document.getElementById('testCode').value.trim();
+    if(!code) { alert('Введіть код'); return; }
+    try {
+        const response = await fetch('/api/payment/verify', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({test_code: code})
+        });
+        const data = await response.json();
+        if(data.success && data.session_id) {
+            localStorage.setItem('enneagram_session', data.session_id);
+             localStorage.setItem("paymentstatus", "paid");
+            localStorage.removeItem('enneagram_result');
+            localStorage.removeItem('enneagram_current_index');
+            localStorage.removeItem('enneagram_answers');
+            alert('✅ Код активовано! Розпочніть тест.');
+            window.location.href = '/test';
+        } else {
+            alert('❌ Невірний код! Спробуйте ще раз.');
+        }
+    } catch(e) {
+        alert('❌ Помилка підключення до сервера');
+    }
+}
+document.getElementById('activateBtn').addEventListener('click', activate);
+document.getElementById('testCode').addEventListener('keypress', (e) => { if(e.key==='Enter') activate(); });
+</script>
+{% endblock %}

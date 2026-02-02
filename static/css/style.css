@@ -1130,3 +1130,48 @@ footer {
     height: 100%;
     border: none;
 }
+
+
+/* ===== Сторінка з відео ===== */
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+    justify-items: center;              /* центруємо елементи в колонках */
+}
+
+.video-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1rem 1rem 1.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    text-align: center;
+    width: 100%;
+    max-width: 520px;
+}
+
+.video-card h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.05rem;
+}
+
+.video-card iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    border: none;
+}
+
+/* останнє «миротворення» — широке і по центру */
+.video-card-wide {
+    grid-column: 1 / -1;                /* займає всю ширину гріда */
+    max-width: 720px;                   /* ширше за звичайні */
+}
+
+@media (max-width: 768px) {
+    .video-card-wide {
+        grid-column: 1 / -1;
+        max-width: 100%;
+    }
+}
